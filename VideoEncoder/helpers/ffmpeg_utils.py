@@ -50,7 +50,7 @@ def encode(filepath):
             video_opts = "-c:v copy -tag:v h264"
     else:
         # Transcode to h265 / hvc1
-        video_opts = "-c:v libx264 -crf 28 -tag:v h264 -preset fast -threads 8"
+        video_opts = "-c:v libx264 -crf 23 -tag:v h264 -preset fast -threads 8"
     # Get the audio channel codec
     audio_codec = get_codec(filepath, channel="a:0")
     if audio_codec == []:
