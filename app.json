@@ -15,9 +15,7 @@
       "description": "your mongo database url"
 }
   },
-{
-  "stack": "heroku-18"
-}
+  "stack": "heroku-18",
   "buildpacks": [
     {
       "url": "https://github.com/jonathanong/heroku-buildpack-ffmpeg-latest"
