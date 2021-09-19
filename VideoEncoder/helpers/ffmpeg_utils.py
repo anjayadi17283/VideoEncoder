@@ -29,7 +29,7 @@ def get_codec(filepath, channel="v:0"):
 
 def encode(filepath):
     basefilepath = os.path.splitext(filepath)[0]
-    output_filepath = basefilepath + ".H.264" + ".mp4"
+    output_filepath = basefilepath + ".HEVC" + ".mp4"
     assert output_filepath != filepath
     if os.path.isfile(output_filepath):
         logging.info('Skipping "{}": file already exists'.format(output_filepath))
@@ -41,9 +41,16 @@ def encode(filepath):
         logging.info("Skipping: no video codec reported")
         return None
     # Video transcode options
-    if video_codec[0] == "hevc":
-        if video_codec[1] == "hvc1":
-            video_opts = "-c:v libx264 -crf 28 -preset fast -threads 8"
+    if video_codec[0] == "hck":
+        if video_codec[1] == "hcke":
+            logging.info("Skipping: already h265 / hvc1")
+            return None
+        else:
+            # Copy stream to hvc1
+            video_opts = "-c:v copy -tag:v h264"
+    else:
+        # Transcode to h265 / hvc1
+        video_opts = "-c:v libx264 -crf 28 -tag:v h264 -preset fast -threads 8"
     # Get the audio channel codec
     audio_codec = get_codec(filepath, channel="a:0")
     if audio_codec == []:
